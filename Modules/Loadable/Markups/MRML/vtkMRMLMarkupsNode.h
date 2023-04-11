@@ -187,17 +187,42 @@ public:
   void CreateDefaultDisplayNodes() override;
 
   //@{
-  /**
-   * Get measurement data, such as length, angle, diameter, cross-section area.
-   * Add/remove/clear measurements.
-   */
+  /// Get measurement data, such as length, angle, diameter, cross-section area.
+  /// Add/remove/clear measurements.
   int GetNumberOfMeasurements();
   int GetNumberOfEnabledMeasurements();
+  int GetNumberOfEnabledAndDefinedMeasurements();
   vtkMRMLMeasurement* GetNthMeasurement(int id);
   vtkMRMLMeasurement* GetMeasurement(const char* name);
   void AddMeasurement(vtkMRMLMeasurement* measurement);
+  std::string GetMeasurementNameFromIndex(int id);
+  int GetMeasurementIndexFromName(const char* name);
+  void RemoveMeasurement(const char* name);
   void RemoveNthMeasurement(int id);
+  void EnableAllMeasurements();
+  void EnableMeasurement(const char* name);
+  void DisableAllMeasurements();
+  void DisableMeasurement(const char* name);
   void ClearValueForAllMeasurements();
+  //@}
+
+  //@{
+  /// Utility method to override the list DefaultMeasurements which in default is empty.
+  /// DefaultMeasurements values have to be the measurement names.
+  /// The list will used by the MarkupsMeasurementPanel to set which measurements will
+  /// be enabled when a markup is added.
+  ///
+  /// \code
+  /// curve = slicer.vtkMRMLMarkupsClosedCurveNode()
+  /// defaultMeasurements = vtk.vtkStringArray()
+  /// defaultMeasurements.SetNumberOfTuples(2)
+  /// defaultMeasurements.SetValue(0, "length")
+  /// defaultMeasurements.SetValue(1, "curvature max")
+  /// curve.SetDefaultMeasurements(defaultMeasurements)
+  /// slicer.mrmlScene.AddDefaultNode(curve)
+  /// \endcode
+  void SetDefaultMeasurements(vtkStringArray *defaultMeasurements);
+  vtkStringArray* GetDefaultMeasurements();
   //@}
 
   /// Update all measurements.
@@ -205,15 +230,13 @@ public:
   void UpdateAllMeasurements();
 
   //@{
-  /**
-   * Set measurement data, such as length, angle, diameter, cross-section area.
-   *
-   * IMPORTANT: These functions should not be used any more. Setting measurements now
-   * happens in the \sa UpdateMeasurementsInternal functions by calling Compute on the
-   * measurements. Similarly, RemoveAllMeasurements should not be called to clear the values,
-   * because the measurements are not set externally but added internally in the constructors
-   * and only updated (Compute called) as needed.
-   */
+  /// Set measurement data, such as length, angle, diameter, cross-section area.
+  ///
+  /// IMPORTANT: These functions should not be used any more. Setting measurements now
+  /// happens in the \sa UpdateMeasurementsInternal functions by calling Compute on the
+  /// measurements. Similarly, RemoveAllMeasurements should not be called to clear the values,
+  /// because the measurements are not set externally but added internally in the constructors
+  /// and only updated (Compute called) as needed.
   void SetNthMeasurement(int id, vtkMRMLMeasurement* measurement);
   void SetNthMeasurement(int id, const std::string& name, double value, const std::string &units,
     std::string printFormat = "", const std::string description = "",
@@ -232,7 +255,8 @@ public:
   enum
   {
     LockModifiedEvent = 19000,                  ///< Markups node lock status is changed. Modified event is invoked, too.
-    LabelFormatModifiedEvent,                   ///< Markups node label format changed. Modified event is invoked, too.
+    LabelFormatModifiedEvent,                   ///< Markups node label format changed.
+    MeasurementsCollectionModifiedEvent,        ///< Markups measurements collection changed.
     PointAddedEvent,                            ///< New control point(s) added. Modified event is NOT invoked.
     PointRemovedEvent,                          ///< Control point(s) deleted. Modified event is NOT invoked.
     PointPositionDefinedEvent,                  ///< Point was not defined (undefined, preview position status,
@@ -1007,7 +1031,7 @@ protected:
   int LastUsedControlPointNumber{0};
 
   /// Index of the control point index that placement is started from (if no other point is requested specifically).
-  int ControlPointPlacementStartIndex{ -1 };
+  int ControlPointPlacementStartIndex{-1};
 
   /// Markup centerpoint (in local coordinates).
   /// It may be used as rotation center or as a handle to grab the widget by.
@@ -1015,6 +1039,9 @@ protected:
 
   /// List of measurements stored for the markup
   vtkCollection* Measurements;
+
+  /// List of default measurements for the MarkupsMeasurement panel
+  vtkSmartPointer<vtkStringArray> DefaultMeasurements;
 
   std::string PropertiesLabelText;
 
