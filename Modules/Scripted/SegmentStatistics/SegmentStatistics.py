@@ -615,7 +615,7 @@ class SegmentStatisticsLogic(ScriptedLoadableModuleLogic):
             if plugin:
                 table.SetColumnProperty(columnName, "Plugin", plugin.name)
                 longColumnName += '<br>Computed by ' + plugin.name + ' Statistics plugin'
-            table.SetColumnLongName(columnName, longColumnName)
+            table.SetColumnTitle(columnName, longColumnName)
             measurementInfo = statistics["MeasurementInfo"][key] if key in statistics["MeasurementInfo"] else {}
             if measurementInfo:
                 for mik, miv in measurementInfo.items():

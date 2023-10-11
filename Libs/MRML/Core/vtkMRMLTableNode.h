@@ -94,7 +94,7 @@ public:
   ///   short, unsigned short, long, unsigned long, char, signed char, unsigned char, long long, unsigned long long, idtype.
   ///   Default: string.
   /// - nullValue: value to be used when a value is not specified (new table row is added, blank string is entered, etc)
-  /// - longName: full human-readable name of the column
+  /// - title: full human-readable name of the column
   /// - description: human-readable detailed description of the column
   /// - unitLabel: simple unit label
   /// - unitCodeMeaning: standard unit definition. Example: Standardized Uptake Value body weight.
@@ -206,6 +206,8 @@ public:
   /// instead/in addition to columnName to identify a column.
   void SetColumnLongName(const std::string& columnName, const std::string& description);
   std::string GetColumnLongName(const std::string& columnName);
+  void SetColumnTitle(const std::string& columnName, const std::string& description);
+  std::string GetColumnTitle(const std::string& columnName);
 
   ///
   /// Set human-readable description of a column.

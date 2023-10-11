@@ -486,7 +486,7 @@ void qMRMLTableView::plotSelection()
       int columnDataType = column->GetDataType();
       if (columnDataType == VTK_BIT)
         {
-        QString message = QString("Type of column %1 is 'bit'. Plotting of these types are currently not supported."
+        QString message = tr("Type of column %1 is 'bit'. Plotting of these types are currently not supported."
           " Please convert the data type of this column to numeric using Table module's Column properties section,"
           " or select different columns for plotting.").arg(column->GetName());
         qCritical() << Q_FUNC_INFO << ": " << message;
@@ -502,7 +502,7 @@ void qMRMLTableView::plotSelection()
           }
         else
           {
-          QString message = QString("Multiple 'string' type of columns are selected for plotting (%1, %2) but only one is allowed."
+          QString message = tr("Multiple 'string' type of columns are selected for plotting (%1, %2) but only one is allowed."
             " Please change selection or convert data type of this column to numeric using Table module's 'Column properties' section."
             ).arg(tableNode->GetColumnName(stringColumnIndex).c_str(), column->GetName());
           qCritical() << Q_FUNC_INFO << ": " << message;
