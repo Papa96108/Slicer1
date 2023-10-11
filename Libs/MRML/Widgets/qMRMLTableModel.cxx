@@ -114,16 +114,16 @@ QString qMRMLTableModelPrivate::columnTooltipText(int tableCol)
     }
 
   std::string columnName = tableNode->GetColumnName(tableCol);
-  QString longName = QString(tableNode->GetColumnLongName(columnName).c_str());
+  QString title = QString(tableNode->GetColumnTitle(columnName).c_str());
   QString description = QString(tableNode->GetColumnDescription(columnName).c_str());
   QString unitLabel = QString(tableNode->GetColumnUnitLabel(columnName).c_str());
 
   QStringList textLines;
 
   // Long name
-  if (!longName.isEmpty())
+  if (!title.isEmpty())
     {
-    textLines << QString("<b>") + longName + QString("</b>");
+    textLines << QString("<b>") + title + QString("</b>");
     }
 
   // Unit

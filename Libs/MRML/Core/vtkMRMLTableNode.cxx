@@ -48,7 +48,7 @@
 static const char SCHEMA_COLUMN_NAME[] = "columnName";
 static const char SCHEMA_COLUMN_TYPE[] = "type";
 static const char SCHEMA_COLUMN_NULL_VALUE[] = "nullValue";
-static const char SCHEMA_COLUMN_LONG_NAME[] = "longName";
+static const char SCHEMA_COLUMN_TITLE[] = "title";
 static const char SCHEMA_COLUMN_DESCRIPTION[] = "description";
 static const char SCHEMA_COLUMN_UNIT_LABEL[] = "unitLabel";
 static const char SCHEMA_COMPONENT_NAMES[] = "componentNames";
@@ -981,13 +981,27 @@ int vtkMRMLTableNode::GetColumnValueTypeFromSchema(const std::string& columnName
 //----------------------------------------------------------------------------
 void vtkMRMLTableNode::SetColumnLongName(const std::string& columnName, const std::string& longName)
 {
-  this->SetColumnProperty(columnName, SCHEMA_COLUMN_LONG_NAME, longName);
+  vtkWarningMacro("This method is deprecated and will be unavailable soon. Please use SetColumnTitle instead");
+  this->SetColumnTitle(columnName, longName);
 }
 
 //----------------------------------------------------------------------------
 std::string vtkMRMLTableNode::GetColumnLongName(const std::string& columnName)
 {
-  return this->GetColumnProperty(columnName, SCHEMA_COLUMN_LONG_NAME);
+  vtkWarningMacro("This method is deprecated and will be unavailable soon. Please use GetColumnTitle instead");
+  return this->GetColumnTitle(columnName);
+}
+
+//----------------------------------------------------------------------------
+void vtkMRMLTableNode::SetColumnTitle(const std::string& columnName, const std::string& title)
+{
+  this->SetColumnProperty(columnName, SCHEMA_COLUMN_TITLE, title);
+}
+
+//----------------------------------------------------------------------------
+std::string vtkMRMLTableNode::GetColumnTitle(const std::string& columnName)
+{
+  return this->GetColumnProperty(columnName, SCHEMA_COLUMN_TITLE);
 }
 
 //----------------------------------------------------------------------------

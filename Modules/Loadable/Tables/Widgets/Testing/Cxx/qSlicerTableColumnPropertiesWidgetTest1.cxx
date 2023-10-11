@@ -73,7 +73,7 @@ int qSlicerTableColumnPropertiesWidgetTest1( int argc, char * argv [] )
 
   tableNode->SetColumnNullValue("X Axis", "-5000");
   tableNode->SetColumnDescription("X Axis", "this is the x column");
-  tableNode->SetColumnLongName("X Axis", "full name of x column");
+  tableNode->SetColumnTitle("X Axis", "full name of x column");
   tableNode->SetColumnUnitLabel("X Axis", "HU");
   tableNode->SetColumnProperty("X Axis", "unitCodeValue", "[hnsf'U]");
   tableNode->SetColumnProperty("X Axis", "unitCodingSchemeDesignator", "UCUM");
@@ -81,7 +81,7 @@ int qSlicerTableColumnPropertiesWidgetTest1( int argc, char * argv [] )
 
   tableNode->SetColumnNullValue("Y Axis", "0.0");
   tableNode->SetColumnDescription("Y Axis", "this is the y column");
-  tableNode->SetColumnLongName("Y Axis", "full name of y column");
+  tableNode->SetColumnTitle("Y Axis", "full name of y column");
   tableNode->SetColumnUnitLabel("Y Axis", "mm");
   tableNode->SetColumnProperty("Y Axis", "unitCodeValue", "1");
   tableNode->SetColumnProperty("Y Axis", "unitCodingSchemeDesignator", "UCUM");
